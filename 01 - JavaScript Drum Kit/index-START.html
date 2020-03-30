@@ -65,15 +65,11 @@
     sound.currentTime = 0; //rewind to the start
     sound.play(); // play sound
     key.classList.add('playing'); // add class
+    key.addEventListener('transitionend', event => {
+      if (event.propertyName !== 'transform') return; // skip it if it's not a transform
+      key.classList.remove('playing');
+    });
   };
-
-  const removeTransition = (event) => {
-    if (event.propertyName !== 'transform') return; // skip it if it's not a transform
-    this.classList.remove('playing');
-  };
-
-  const keys = document.querySelectorAll('.key');
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
   window.addEventListener('keydown', playSound);
 </script>
